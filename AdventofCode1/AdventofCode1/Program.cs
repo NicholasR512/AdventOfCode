@@ -57,7 +57,7 @@ Console.WriteLine(total);*/
 string filePath = "input2.txt";
 
 string[] lines = File.ReadAllLines(filePath);
-int safe = 0;
+int safe = 1;
 
 for (int j = 0; j < lines.Length; j++)
 {
