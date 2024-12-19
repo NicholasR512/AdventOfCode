@@ -57,58 +57,93 @@ Console.WriteLine(total);*/
 string filePath = "input2.txt";
 
 string[] lines = File.ReadAllLines(filePath);
-int safe = 1;
+int count = 0;
 
 for (int j = 0; j < lines.Length; j++)
 {
     string[] numberStrings = lines[j].Split(' ');
     int[] numbers = Array.ConvertAll(numberStrings, int.Parse);
-
+    bool isIncreasing = false;
+    bool isDecreasing = false;
     bool isSafe = true;
-    int badLevelCount = 0;
+    int badIndex = 0;
 
     for (int i = 0; i < numbers.Length - 1; i++)
     {
-        if (Math.Abs(numbers[i] - numbers[i + 1]) > 3 || numbers[i] == numbers[i + 1])
+        if (numbers[i] - numbers[i + 1] < 0)
         {
-            if (badLevelCount == 0)
-            {
-                badLevelCount++;
-            }
-            else
+            isDecreasing = true;
+        } else if (numbers[i] - numbers[i + 1] > 0)
+        {
+            isIncreasing = true;
+        }
+        else
+        {
+            badIndex = i;
+            isSafe = false;
+        }
+        if (!isSafe)
+        {
+            break;
+        } 
+        else if(isDecreasing == isIncreasing)
+        {
+            isSafe = false;
+            badIndex = i; 
+            break;
+        }
+        else
+        {
+            if (Math.Abs(numbers[i] - numbers[i + 1]) > 3)
             {
                 isSafe = false;
-                break;
             }
         }
+
     }
 
-    if (isSafe || (badLevelCount == 1 && ValidateWithSingleRemoval(numbers)))
+    if (!isSafe)
     {
-        safe++;
-    }
-}
-
-Console.WriteLine($"Number of safe reports: {safe}");
-
-bool ValidateWithSingleRemoval(int[] numbers)
-{
-    for (int i = 0; i < numbers.Length; i++)
-    {
-        bool isValid = true;
-
-        for (int j = 0; j < numbers.Length - 1; j++)
+        for (int i = 0; i < numbers.Length - 1; i++)
         {
-            if (j == i || j + 1 == i) continue;
-            if (Math.Abs(numbers[j] - numbers[j + 1]) > 3 || numbers[j] == numbers[j + 1])
+            if(i == badIndex - 1)
             {
-                isValid = false;
-                break;
+                if (numbers[i] - numbers[i + 2] < 0)
+                {
+                    isDecreasing = true;
+                }
+                else if (numbers[i] - numbers[i + 2] > 0)
+                {
+                    isIncreasing = true;
+                }
+                else
+                {
+                    badIndex = i;
+                    isSafe = false;
+                }
+                if (!isSafe)
+                {
+                    break;
+                }
+                else if (isDecreasing == isIncreasing)
+                {
+                    isSafe = false;
+                    badIndex = i;
+                    break;
+                }
+                else
+                {
+                    if (Math.Abs(numbers[i] - numbers[i + 2]) > 3)
+                    {
+                        isSafe = false;
+                    }
+                }
             }
         }
-
-        if (isValid) return true;
     }
-
-    return false;
+    else
+    {
+        count++;
+    }
 }
+Console.WriteLine(count);
