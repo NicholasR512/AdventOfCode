@@ -70,80 +70,76 @@ for (int j = 0; j < lines.Length; j++)
 
     for (int i = 0; i < numbers.Length - 1; i++)
     {
-        if (numbers[i] - numbers[i + 1] < 0)
-        {
+        if (numbers[i] - numbers[i + 1] > 0 && (Math.Abs(numbers[i] - numbers[i + 1]) < 4)) {
             isDecreasing = true;
-        } else if (numbers[i] - numbers[i + 1] > 0)
+        } else if (numbers[i] - numbers[i + 1] < 0 && (Math.Abs(numbers[i] - numbers[i + 1]) < 4))
         {
             isIncreasing = true;
-        }
-        else
-        {
+        } else {
+            isSafe = false;
             badIndex = i;
-            isSafe = false;
-        }
-        if (!isSafe)
-        {
-            break;
-        } 
-        else if(isDecreasing == isIncreasing)
-        {
-            isSafe = false;
-            badIndex = i; 
             break;
         }
-        else
-        {
-            if (Math.Abs(numbers[i] - numbers[i + 1]) > 3)
-            {
-                isSafe = false;
-            }
+
+        if (isDecreasing == isIncreasing) {
+            isSafe = false;
+            badIndex = i;
+            break;
         }
 
     }
-
-    if (!isSafe)
+    if (isSafe) {
+        count++;
+    } else
     {
+        isIncreasing = false;
+        isDecreasing = false;
+        isSafe = true;
         for (int i = 0; i < numbers.Length - 1; i++)
         {
             if(i == badIndex - 1)
             {
-                if (numbers[i] - numbers[i + 2] < 0)
+                if (numbers[i] - numbers[i + 2] > 0 && (Math.Abs(numbers[i] - numbers[i + 2]) < 4))
                 {
                     isDecreasing = true;
                 }
-                else if (numbers[i] - numbers[i + 2] > 0)
+                else if (numbers[i] - numbers[i + 2] < 0 && (Math.Abs(numbers[i] - numbers[i + 2]) < 4))
                 {
                     isIncreasing = true;
                 }
                 else
                 {
-                    badIndex = i;
                     isSafe = false;
-                }
-                if (!isSafe)
-                {
                     break;
                 }
-                else if (isDecreasing == isIncreasing)
+            } else if (i == badIndex)
+            {
+                continue;
+            } else
+            {
+                if (numbers[i] - numbers[i + 1] > 0 && (Math.Abs(numbers[i] - numbers[i + 1]) < 4))
                 {
-                    isSafe = false;
-                    badIndex = i;
-                    break;
+                    isDecreasing = true;
+                }
+                else if (numbers[i] - numbers[i + 1] < 0 && (Math.Abs(numbers[i] - numbers[i + 1]) < 4))
+                {
+                    isIncreasing = true;
                 }
                 else
                 {
-                    if (Math.Abs(numbers[i] - numbers[i + 2]) > 3)
-                    {
-                        isSafe = false;
-                    }
+                    isSafe = false;
+                    break;
                 }
             }
+
+            if (isDecreasing == isIncreasing)
+            {
+                isSafe = false;
+                break;
+            }
+
         }
-    }
-    else
-    {
-        count++;
+        if (isSafe) { count++; }
     }
 }
 Console.WriteLine(count);
