@@ -54,7 +54,7 @@ for (int i = 0; i < firstList.Length; i++)
 Console.WriteLine(total);*/
 
 //Day 2
-string filePath = "input2.txt";
+/* string filePath = "input2.txt";
 
 string[] lines = File.ReadAllLines(filePath);
 int count = 0;
@@ -83,7 +83,7 @@ for (int j = 0; j < lines.Length; j++)
 
         if (isDecreasing == isIncreasing) {
             isSafe = false;
-            badIndex = i;
+            badIndex = i - 1;
             break;
         }
 
@@ -142,4 +142,88 @@ for (int j = 0; j < lines.Length; j++)
         if (isSafe) { count++; }
     }
 }
-Console.WriteLine(count);
+Console.WriteLine(count); */
+
+//Day 3
+/* string filePath = "input3.txt"; 
+string content = File.ReadAllText(filePath);
+
+long totalSum = 0;
+int index = 0;
+bool isMultiplicationEnabled = true; 
+
+
+while (index < content.Length)
+{
+    if (index + 3 < content.Length &&
+        content[index] == 'd' &&
+        content[index + 1] == 'o' &&
+        content[index + 2] == '(' &&
+        content[index + 3] == ')')
+    {
+        isMultiplicationEnabled = true; 
+        index += 4; 
+    }
+
+    else if (index + 6 < content.Length &&
+             content[index] == 'd' &&
+             content[index + 1] == 'o' &&
+             content[index + 2] == 'n' &&
+             (content[index + 3] == '\'' || content[index + 3] == '’') && 
+             content[index + 4] == 't' &&
+             content[index + 5] == '(' && content[index + 6] == ')')
+    {
+        isMultiplicationEnabled = false; 
+        index += 6; 
+    }
+    else if (index + 3 < content.Length &&
+             content[index] == 'm' &&
+             content[index + 1] == 'u' &&
+             content[index + 2] == 'l' &&
+             content[index + 3] == '(')
+    {
+        index += 4; 
+
+
+        string firstNumber = "";
+        while (index < content.Length && char.IsDigit(content[index]))
+        {
+            firstNumber += content[index];
+            index++;
+        }
+
+
+        if (index < content.Length && content[index] == ',')
+        {
+            index++; 
+
+            string secondNumber = "";
+            while (index < content.Length && char.IsDigit(content[index]))
+            {
+                secondNumber += content[index];
+                index++;
+            }
+
+            if (index < content.Length && content[index] == ')')
+            {
+                index++; 
+
+                if (int.TryParse(firstNumber, out int x) && int.TryParse(secondNumber, out int y))
+                {
+                    if (isMultiplicationEnabled)
+                    {
+                        totalSum += x * y;
+                    }
+                }
+            }
+        }
+    }
+    else
+    {
+        index++;
+    }
+}
+
+
+Console.WriteLine(totalSum); */
+
